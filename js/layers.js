@@ -51,12 +51,11 @@ addLayer("p", {
         return player.points.add(1).pow(0.15)
     },
     effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
-    14: {
+        }
+   14: {
     title: "Welcome",
     description: "Multiply point gain by 5",
     cost: new Decimal(1),
-        },
         }
-       
     },
 })
