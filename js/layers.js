@@ -57,9 +57,9 @@ addLayer("p", {
     description: "Multiply point gain by 5",
     cost: new Decimal(1),
     effect() {
-        return player[this.layer].points.add(1).pow(0.25)
+        return player[this.points].points.add(1).pow(0.25)
     },
-    effectDisplay() { return format(upgradeEffect(this.layer, this.points))+"x" }, // Add formatting to the effect
+    effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
     },
 })
