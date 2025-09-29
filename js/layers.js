@@ -55,7 +55,7 @@ addLayer("p", {
         }
                           ,14: {
     title: "Develop I, just like in the original",
-    description: "Multiply point gain by 5",
+    description: "Points boost themselves",
     cost: new Decimal(1),
     effect() {
         return player.points.add(1).pow(0.15)
