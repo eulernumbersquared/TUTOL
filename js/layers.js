@@ -32,9 +32,14 @@ addLayer("p", {
     cost: new Decimal(1),
         },
                 12: {
-    title: "Aren't these meant to be leaves?",
-    description: "Triple your point gain.",
-    cost: new Decimal(50),
+    title: "1st synergy",
+    description: "Prestige points boost points.",
+    cost: new Decimal(5),
+        effect() {
+        return player[this.layer].points.add(1).pow(0.5)
+    },
+    effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+    
 
         },
 
