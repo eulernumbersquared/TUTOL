@@ -17,6 +17,7 @@ addLayer("p", {
         let mult = new Decimal(1)
         if (hasUpgrade('p', 13)) mult = mult.times(upgradeEffect('p', 13))
         if (hasUpgrade('p', 14)) mult = mult.times(upgradeEffect('p', 14))
+        if (hasUpgrade('p', 21)) mult = mult.times(5)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -58,7 +59,7 @@ addLayer("p", {
     description: "Points boost themselves",
     cost: new Decimal(250),
     effect() {
-        return player.points.add(1).pow(0.15)
+        return player.points.add(1).pow(0.13)
     },
     effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
@@ -67,9 +68,14 @@ addLayer("p", {
     description: "Prestige points boost themselves",
     cost: new Decimal(1000),
     effect() {
-        return player[this.layer].points.add(1).pow(0.3)
+        return player[this.layer].points.add(1).pow(0.15)
     },
     effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+        },
+        21: {
+    title: "High yielding.. seeds",
+    description: "Multiply seed  gain by 5",
+    cost: new Decimal(1000000),
         },
     },
 })
