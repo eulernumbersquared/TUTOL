@@ -31,12 +31,12 @@ addLayer("p", {
                     11: {
     title: "Welcome",
     description: "Multiply point gain by 5",
-    cost: new Decimal(1),
+    cost: new Decimal(10),
         },
                 12: {
     title: "1st synergy",
     description: "Prestige points boost points.",
-    cost: new Decimal(5),
+    cost: new Decimal(50),
         effect() {
         return player[this.layer].points.add(1).pow(0.5)
     },
@@ -47,7 +47,7 @@ addLayer("p", {
         13: {
      title: "Other way around i see?",
     description: "Points boost prestige points.",
-    cost: new Decimal(5),
+    cost: new Decimal(250),
             effect() {
         return player.points.add(1).pow(0.15)
     },
@@ -56,7 +56,7 @@ addLayer("p", {
                           ,14: {
     title: "Develop I, just like in the original",
     description: "Points boost themselves",
-    cost: new Decimal(1),
+    cost: new Decimal(1000),
     effect() {
         return player.points.add(1).pow(0.15)
     },
