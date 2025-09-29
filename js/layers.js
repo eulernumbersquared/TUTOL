@@ -31,6 +31,12 @@ addLayer("p", {
     description: "Multiply point gain by 5",
     cost: new Decimal(1),
         },
+                12: {
+    title: "Aren't these meant to be leaves?",
+    description: "Triple your point gain.",
+    cost: new Decimal(50),
+
+        },
 
     },
 })
