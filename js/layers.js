@@ -36,7 +36,7 @@ addLayer("p", {
                 12: {
     title: "1st synergy",
     description: "Prestige points boost points.",
-    cost: new Decimal(50),
+    cost: new Decimal(20),
         effect() {
         return player[this.layer].points.add(1).pow(0.5)
     },
