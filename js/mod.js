@@ -12,13 +12,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "μ0.11",
+	num: "μ0.111",
 	name: "the 1st update",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
 	<h3>v0.0</h3><br>
-		balance changes jumpscare + new upgrade.`
+		balance changes jumpscare + new upgrade (new upgrade is balanced).`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
