@@ -62,5 +62,14 @@ addLayer("p", {
     },
     effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
+    15: {
+    title: "Oh, and i cant forget",
+    description: "Prestige points boost themselves",
+    cost: new Decimal(1),
+    effect() {
+        return player[this.layer].add(1).pow(0.5)
+    },
+    effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+        },
     },
 })
