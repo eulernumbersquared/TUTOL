@@ -75,7 +75,7 @@ addLayer("p", {
         21: {
     title: "High yielding.. seeds",
     description: "Multiply seed  gain by 5",
-    cost: new Decimal(1000000),
+    cost: new Decimal(5000),
         },
     },
 })
