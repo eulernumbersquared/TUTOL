@@ -18,7 +18,7 @@ let VERSION = {
 
 let changelog = `<h1>Changelog:</h1><br>
 	<h3>v0.0</h3><br>
-		More seed upgrades and new reset layer.`
+		More seed upgrades and new reset layer (placeholder).`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
