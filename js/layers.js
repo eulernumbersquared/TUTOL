@@ -106,7 +106,7 @@ addLayer("F", {
     row: 1,                                 // The row this layer is on (0 is the first row).
 
     baseResource: "Seeds",                 // The name of the resource your prestige gain is based on.
-    baseAmount() { return player.points },  // A function to return the current amount of baseResource.
+    baseAmount() { return player.p.Seeds },  // A function to return the current amount of baseResource.
 
     requires: new Decimal(10),              // The amount of the base needed to  gain 1 of the prestige currency.
                                             // Also the amount required to unlock the layer.
