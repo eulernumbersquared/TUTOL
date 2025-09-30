@@ -135,10 +135,11 @@ buyables: {
         
         cost(x) { return new Decimal(1).mul(x) },
         effect(x) {
-            return player.points.add(x)
+            let eff = player.points.add(x)
+            return eff
 
         },
-        display() { return effect },
+        display(eff) { return eff  },
         canAfford() { return player[this.layer].points.gte(this.cost()) },
         buy() {
             player[this.layer].points = player[this.layer].points.sub(this.cost())
