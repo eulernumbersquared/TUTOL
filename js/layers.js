@@ -139,7 +139,7 @@ buyables: {
             setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
         },
         effect(x) {
-            if (hasUpgrade('F', 1)) x = x.mul(2)
+            let effect = player.points.add(1)
         }
     },
     
