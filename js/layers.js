@@ -131,12 +131,14 @@ addLayer("F", {
     },
 buyables: {
     11: {
+        title: "Composter I",
+        
         cost(x) { return new Decimal(1).mul(x) },
         effect(x) {
             return player.points.add(x)
 
         },
-        display() { return x },
+        display() { return effect },
         canAfford() { return player[this.layer].points.gte(this.cost()) },
         buy() {
             player[this.layer].points = player[this.layer].points.sub(this.cost())
