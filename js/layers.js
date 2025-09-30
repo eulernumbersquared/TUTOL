@@ -132,7 +132,7 @@ addLayer("F", {
  buyables: {
     11: {
         cost(x) { return new Decimal(1).mul(x) },
-        effect(x) {return x.add(1).pow(2)},
+        effect(x) {return "x"},
         display() { return this.effect(x) },
         canAfford() { return player[this.layer].points.gte(this.cost()) },
         buy() {
