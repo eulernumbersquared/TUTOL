@@ -140,7 +140,7 @@ buyables: {
 
         },
         display(eff) { 
-            let eff = player.points.mul(x)
+            
             return eff
           },
         canAfford() { return player[this.layer].points.gte(this.cost()) },
