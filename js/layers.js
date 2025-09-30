@@ -130,7 +130,7 @@ addLayer("F", {
         // Look in the upgrades docs to see what goes here!
     },
 buyables: {
-    1: {
+    23: {
         cost(x) { return new Decimal(1).mul(x) },
         effect() {
         return player.points.add(1).pow(0.15)
