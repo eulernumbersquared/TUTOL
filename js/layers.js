@@ -82,5 +82,10 @@ addLayer("p", {
     description: "Multiply leaf gain by 10",
     cost: new Decimal(10000),
         },
+    23: {
+    title: "Powers i see?",
+    description: "Increase leaves by ^1.1",
+    cost: new Decimal(1000000),
+        },
     },
 })
