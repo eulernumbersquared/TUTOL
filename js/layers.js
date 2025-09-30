@@ -123,10 +123,14 @@ addLayer("F", {
     },
 
     layerShown() { return true },          // Returns a bool for if this layer's node should be visible in the tree.
-
+    
+    
     upgrades: {
-        buyables: {
-    25: {
+        
+        // Look in the upgrades docs to see what goes here!
+    },
+    buyables: {
+    11: {
         cost(x) { return new Decimal(1).mul(x) },
         display() { return "Blah" },
         canAfford() { return player[this.layer].points.gte(this.cost()) },
@@ -138,8 +142,6 @@ addLayer("F", {
     },
     etc
 }
-        // Look in the upgrades docs to see what goes here!
-    },
     
     
 })
