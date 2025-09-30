@@ -90,7 +90,7 @@ addLayer("p", {
         },
     24: {
     title: "Get ready",
-    description: "Increase seeds by ^1.05",
+    description: "Increase seeds by ^1.1",
     cost: new Decimal(500000000),
         },
     },
