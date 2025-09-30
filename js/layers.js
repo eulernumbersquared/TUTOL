@@ -6,7 +6,7 @@ addLayer("p", {
         unlocked: true,
 		points: new Decimal(10),
     }},
-    color: "#c27e79",
+    color: "#b84107",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
     resource: "Seeds", // Name of prestige currency
     baseResource: "Leaves", // Name of resource prestige is based on
@@ -108,7 +108,7 @@ addLayer("F", {
     baseResource: "Seeds",                 // The name of the resource your prestige gain is based on.
     baseAmount() { return player.p.points },  // A function to return the current amount of baseResource.
 
-    requires: new Decimal(10),              // The amount of the base needed to  gain 1 of the prestige currency.
+    requires: new Decimal(1e9),              // The amount of the base needed to  gain 1 of the prestige currency.
                                             // Also the amount required to unlock the layer.
 
     type: "normal",                         // Determines the formula used for calculating prestige currency.
@@ -126,4 +126,17 @@ addLayer("F", {
     upgrades: {
         // Look in the upgrades docs to see what goes here!
     },
+    buyables: {
+    11: {
+        cost(x) { return new Decimal(1).mul(x) },
+        display() { return "Blah" },
+        canAfford() { return player[this.layer].points.gte(this.cost()) },
+        buy() {
+            player[this.layer].points = player[this.layer].points.sub(this.cost())
+            setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+        },
+        etc
+    },
+    etc
+}
 })
