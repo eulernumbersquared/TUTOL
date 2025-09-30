@@ -37,7 +37,7 @@ addLayer("p", {
                 12: {
     title: "1st synergy",
     description: "Prestige points boost points.",
-    cost: new Decimal(20),
+    cost: new Decimal(15),
         effect() {
         return player[this.layer].points.add(1).pow(0.25)
     },
@@ -76,6 +76,11 @@ addLayer("p", {
     title: "High yielding.. seeds",
     description: "Multiply seed  gain by 5",
     cost: new Decimal(5000),
+        },
+        22: {
+    title: "More branches",
+    description: "Multiply leaf gain by 10",
+    cost: new Decimal(10000),
         },
     },
 })
