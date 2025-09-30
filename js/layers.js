@@ -135,7 +135,7 @@ buyables: {
         
         cost(x) { return new Decimal(1).mul(x) },
         effect(x) {
-            let eff = player.points.add(x)
+            let eff = player.points.mul(x)
             return eff
 
         },
