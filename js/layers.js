@@ -103,7 +103,7 @@ addLayer("F", {
 
     color: "#4BDC13",                       // The color for this layer, which affects many elements.
     resource: "Fruits",            // The name of this layer's main prestige resource.
-    row: 0,                                 // The row this layer is on (0 is the first row).
+    row: 1,                                 // The row this layer is on (0 is the first row).
 
     baseResource: "Seeds",                 // The name of the resource your prestige gain is based on.
     baseAmount() { return player.points },  // A function to return the current amount of baseResource.
