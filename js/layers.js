@@ -132,7 +132,7 @@ addLayer("F", {
 buyables: {
     11: {
         cost(x) { return new Decimal(1).mul(x) },
-        effect(x) {gain = gain.pow(1.1)
+        effect(x) {x = x.pow(1.1)
             return x
         },
         display() { return "Blah" },
