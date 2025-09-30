@@ -135,7 +135,7 @@ buyables: {
         effect(x) {x = x.pow(1.1)
             return x
         },
-        display() { return "Blah" },
+        display() { return x },
         canAfford() { return player[this.layer].points.gte(this.cost()) },
         buy() {
             player[this.layer].points = player[this.layer].points.sub(this.cost())
