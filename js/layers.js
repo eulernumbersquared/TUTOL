@@ -130,34 +130,21 @@ addLayer("F", {
         // Look in the upgrades docs to see what goes here!
     },
 buyables: {
-            0: {
-                title: "The Modding Tree", // Optional, displayed at the top in a larger font
-                cost(x=player[this.layer].buyables[this.id]) { // cost for buying xth buyable, can be an object if there are multiple currencies
-                    let cost = [new Decimal("1e800"),new Decimal("1e4000"),new Decimal("1e20000"),new Decimal("1e100000"),new Decimal("1e500000"),new Decimal("e2e7"),new Decimal("e2e8"),new Decimal("e2e12"),new Decimal("e9e15"),new Decimal(Infinity)][player[this.layer].buyables[this.id].toNumber()];
-                    return cost
-                },
-                display() { // Everything else displayed in the buyable button after the title
-                    let data = tmp[this.layer].buyables[this.id]
-                    return "Level: "+formatWhole(player[this.layer].buyables[this.id])+"<br>Cost: "+format(data.cost)+" points<br>Effect: Multiply point gain by "+format(data.effect)+", and Unlock "+formatWhole(player[this.layer].buyables[this.id])+" new trees";
-                },
-                unlocked() { return player[this.layer].points.gte(this.id) }, 
-                canAfford() {
-                    return player.points.gte(tmp[this.layer].buyables[this.id].cost)
-				},
-                buy() { 
-                    cost = tmp[this.layer].buyables[this.id].cost
-                    player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
-                    player.points = player.points.sub(cost)
-					player[this.layer].points = player[this.layer].buyables[this.id].add(1)
-				},
-                buyMax() {}, // You'll have to handle this yourself if you want
-				effect() {
-					return Decimal.pow(1e20,player[this.layer].buyables[this.id].pow(2));
-				},
-                style: {'height':'200px','width':'200px'},
-            },
-
+    11: {
+        cost(x) { return new Decimal(1).mul(x) },
+        display() { return "Blah" },
+        canAfford() { return player[this.layer].points.gte(this.cost()) },
+        buy() {
+            player[this.layer].points = player[this.layer].points.sub(this.cost())
+            setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
+        },
+        effect(x) {
+            if (hasUpgrade('F', 1)) x = x.mul(2)
+        }
+    },
+    
 }
+    
     
 })
 
