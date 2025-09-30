@@ -6,7 +6,7 @@ addLayer("p", {
         unlocked: true,
 		points: new Decimal(10),
     }},
-    color: "#4BDC13",
+    color: "#44832cff",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
     resource: "Seeds", // Name of prestige currency
     baseResource: "Leaves", // Name of resource prestige is based on
@@ -50,7 +50,7 @@ addLayer("p", {
     description: "Points boost prestige points.",
     cost: new Decimal(50),
             effect() {
-        return player.points.add(1).pow(0.15)
+        return player.points.add(1).pow(0.3)
     },
     effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         }
