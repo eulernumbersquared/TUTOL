@@ -140,7 +140,6 @@ addLayer("F", {
         },
         etc
     },
-    etc
 }
     
     
