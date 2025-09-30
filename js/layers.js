@@ -129,21 +129,9 @@ addLayer("F", {
         
         // Look in the upgrades docs to see what goes here!
     },
- buyables: {
-    11: {
-        title: "Composter I",
-        cost(x) { return new Decimal(1).mul(x) },
-        effect(x) {return "Boost leaves by",x = x.add(2)},
-        display() { return x},
-        canAfford() { return player[this.layer].points.gte(this.cost()) },
-        buy() {
-            player[this.layer].points = player[this.layer].points.sub(this.cost())
-            setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
-        },
-        
-    },
+
     
-}
+
     
     
 })
