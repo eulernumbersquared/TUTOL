@@ -139,9 +139,9 @@ buyables: {
             return eff
 
         },
-        display(x) { 
-            let x = getBuyableAmount()
-            return x
+        display(test) { 
+            let test = getBuyableAmount()
+            return test
           },
         canAfford() { return player[this.layer].points.gte(this.cost()) },
         buy() {
