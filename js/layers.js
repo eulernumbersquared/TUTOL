@@ -131,7 +131,7 @@ addLayer("F", {
     },
 buyables: {
     11: {
-        title: "Composter I",
+        title: "Composter I" eff,
         
         cost(x) { return new Decimal(1).mul(x) },
         effect(x) {
