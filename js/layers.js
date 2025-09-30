@@ -18,6 +18,7 @@ addLayer("p", {
         if (hasUpgrade('p', 13)) mult = mult.times(upgradeEffect('p', 13))
         if (hasUpgrade('p', 14)) mult = mult.times(upgradeEffect('p', 14))
         if (hasUpgrade('p', 21)) mult = mult.times(5)
+        if (hasUpgrade('p', 24)) mult = mult.pow(1.05)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -86,6 +87,11 @@ addLayer("p", {
     title: "Powers i see?",
     description: "Increase leaves by ^1.1",
     cost: new Decimal(1000000),
+        },
+    24: {
+    title: "Get ready",
+    description: "Increase seeds by ^1.05",
+    cost: new Decimal(500000000),
         },
     },
 })
