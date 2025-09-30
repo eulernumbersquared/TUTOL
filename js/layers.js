@@ -140,6 +140,7 @@ buyables: {
         },
         effect(x) {
             let effect = player.points.add(1)
+            return effect
         }
     },
     
