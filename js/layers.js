@@ -133,7 +133,7 @@ addLayer("F", {
     11: {
         cost(x) { return new Decimal(1).mul(x) },
         effect(x) {return "x"},
-        display() { return this.effect(x) },
+        display() { return 2 },
         canAfford() { return player[this.layer].points.gte(this.cost()) },
         buy() {
             player[this.layer].points = player[this.layer].points.sub(this.cost())
