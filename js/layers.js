@@ -102,7 +102,7 @@ addLayer("F", {
     }},
 
     color: "rgba(211, 26, 26, 1)",                       // The color for this layer, which affects many elements.
-    resource: "fart",            // The name of this layer's main prestige resource.
+    resource: "Fruits",            // The name of this layer's main prestige resource.
     row: 1,                                 // The row this layer is on (0 is the first row).
 
     baseResource: "Seeds",                 // The name of the resource your prestige gain is based on.
