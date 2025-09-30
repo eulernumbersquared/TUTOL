@@ -133,7 +133,7 @@ buyables: {
     11: {
         cost(x) { return new Decimal(1).mul(x) },
         effect(x) {gain = gain.pow(1.1)
-            return gain
+            return x
         },
         display() { return "Blah" },
         canAfford() { return player[this.layer].points.gte(this.cost()) },
