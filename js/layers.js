@@ -6,7 +6,7 @@ addLayer("p", {
         unlocked: true,
 		points: new Decimal(10),
     }},
-    color: "#44832cff",
+    color: "#c27e79",
     requires: new Decimal(10), // Can be a function that takes requirement increases into account
     resource: "Seeds", // Name of prestige currency
     baseResource: "Leaves", // Name of resource prestige is based on
@@ -101,7 +101,7 @@ addLayer("F", {
         points: new Decimal(0),             // "points" is the internal name for the main resource of the layer.
     }},
 
-    color: "#4BDC13",                       // The color for this layer, which affects many elements.
+    color: "rgba(211, 26, 26, 1)",                       // The color for this layer, which affects many elements.
     resource: "Fruits",            // The name of this layer's main prestige resource.
     row: 1,                                 // The row this layer is on (0 is the first row).
 
