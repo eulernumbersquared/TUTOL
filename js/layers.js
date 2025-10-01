@@ -134,9 +134,9 @@ buyables: {
         title: "Composter I",
         
         cost(x) { return new Decimal(100).mul(2) },
-        effect(x) {
-            
-
+        effect(fart) {
+            let x = player.points
+            x = x.add(setBuyableAmount)
         },
         
         canAfford() { return player[this.layer].points.gte(this.cost()) },
@@ -145,8 +145,13 @@ buyables: {
             setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
         },
         display(test) {
-            return getBuyableAmount(this.layer, this.id)
+            return x
+            
           },
+        effect(fart) {
+            let x = player.points
+            x = x.add(setBuyableAmount)
+        },
         
     },
     
