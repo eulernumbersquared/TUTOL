@@ -19,7 +19,7 @@ addLayer("p", {
         if (hasUpgrade('p', 14)) mult = mult.times(upgradeEffect('p', 14))
         if (hasUpgrade('p', 21)) mult = mult.times(5)
         if (hasUpgrade('p', 24)) mult = mult.pow(1.1)
-        if (hasUpgrade('F', 41)) mult = mult.pow(1.2)
+        if (hasUpgrade('F', 11)) mult = mult.pow(1.2)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -127,7 +127,7 @@ addLayer("F", {
     
     
     upgrades: {
-        41: {
+        11: {
             title: "MASSIVE boost",
             description: "Increase leaves and seeds by ^1.15",
             cost: new Decimal(1),
