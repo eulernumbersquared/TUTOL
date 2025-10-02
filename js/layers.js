@@ -136,7 +136,7 @@ addLayer("F", {
 
     },
     buyables: {
-    11: {
+    21: {
         cost(x) { return new Decimal(1).mul(x) },
         display() { return "Boost leaves by 2 compounding" },
         canAfford() { return player[this.layer].points.gte(this.cost()) },
@@ -144,13 +144,15 @@ addLayer("F", {
             player[this.layer].points = player[this.layer].points.sub(this.cost())
             setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
         },
-        effect(amount) {
-            amount = getBuyableAmount(this.layer, this.id)
-            player.points.times(amount)
+        buyableEffect() {
+
+            player.points.pow_base(2).add(1)
         },
-        effectDisplay() {
-            return amount
-        },
+        effectDisplay()
+        {
+            return buyableEffect(this.layer, this.id)
+        }
+       
 
     },
 
