@@ -144,10 +144,13 @@ addLayer("F", {
             player[this.layer].points = player[this.layer].points.sub(this.cost())
             setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
         },
-        effect() {
-            player.points.times(2)
+        effect(amount) {
+            amount = getBuyableAmount(this.layer, this.id)
+            player.points.times(amount)
         },
-        displayEffect() { this.effect},
+        effectDisplay() {
+            return amount
+        },
 
     },
 
