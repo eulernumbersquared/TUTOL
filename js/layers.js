@@ -19,6 +19,7 @@ addLayer("p", {
         if (hasUpgrade('p', 14)) mult = mult.times(upgradeEffect('p', 14))
         if (hasUpgrade('p', 21)) mult = mult.times(5)
         if (hasUpgrade('p', 24)) mult = mult.pow(1.1)
+        if (hasUpgrade('F', 41)) mult = mult.pow(1.2)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -126,36 +127,15 @@ addLayer("F", {
     
     
     upgrades: {
+        41: {
+            title: "MASSIVE boost",
+            description: "Increase leaves and seeds by ^1.15",
+            cost: new Decimal(1),
+        }
         
-        // Look in the upgrades docs to see what goes here!
+
     },
-buyables: {
-    11: {
-        title: "Composter I",
-        
-        cost(x) { return new Decimal(100).mul(2) },
-        effect(fart) {
-            let x = player.points
-            x = x.add(setBuyableAmount)
-        },
-        
-        canAfford() { return player[this.layer].points.gte(this.cost()) },
-        buy() {
-            player[this.layer].points = player[this.layer].points.sub(this.cost())
-            setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
-        },
-        display(test) {
-            return x
-            
-          },
-        effect(fart) {
-            let x = player.points
-            x = x.add(setBuyableAmount)
-        },
-        
-    },
-    
-}
+
     
 })
 
