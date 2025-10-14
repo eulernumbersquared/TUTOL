@@ -135,15 +135,11 @@ addLayer("F", {
         
 
     },
-  clickables: {
-    21: {
+
+  buyables: {
+    11: {
         title: "Composter I",
-       cost() {
-            player[this.layer].points = player[this.layer].points.sub(this.cost());
-    },
-        effect(amount) {
-            return Decimal.pow(2, amount);
-        }
+        cost(x) { return x}
     }
   }
     
