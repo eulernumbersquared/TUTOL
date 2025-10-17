@@ -139,7 +139,17 @@ addLayer("F", {
   buyables: {
     11: {
         title: "Composter I",
-        cost(x) { return x}
+        cost() {
+        
+        },
+        
+        display() {
+            return(this.cost)
+        },
+        
+
+    
+        
     }
   }
     
