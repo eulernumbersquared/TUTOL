@@ -12,7 +12,7 @@ addLayer("p", {
     baseResource: "Leaves", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.5, // Prestige currency exponent
+    exponent: 0.8, // Prestige currency exponent
         gainMult() {
         let mult = new Decimal(1)
         if (hasUpgrade('p', 13)) mult = mult.times(upgradeEffect('p', 13))
@@ -20,6 +20,7 @@ addLayer("p", {
         if (hasUpgrade('p', 21)) mult = mult.times(5)
         if (hasUpgrade('p', 24)) mult = mult.pow(1.1)
         if (hasUpgrade('F', 11)) mult = mult.pow(1.2)
+        if (hasUpgrade('F', 13)) mult = mult.times(2.71)
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -30,6 +31,12 @@ addLayer("p", {
         {key: "p", description: "S: Decomplize for some seeds", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     layerShown(){return true},
+    passiveGeneration(){
+let passive = new Decimal(0)
+if (hasMilestone("PE", 2)) passive = passive.add(1) //5% Prestige Points depending on Reset
+return passive
+},
+    
         upgrades: {
                     11: {
     title: "Welcome",
@@ -41,7 +48,7 @@ addLayer("p", {
     description: "Prestige points boost points.",
     cost: new Decimal(15),
         effect() {
-        return player[this.layer].points.add(1).pow(0.25)
+        return player[this.layer].points.add(1).pow(0.2)
     },
     effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
     
@@ -52,7 +59,7 @@ addLayer("p", {
     description: "Points boost prestige points.",
     cost: new Decimal(50),
             effect() {
-        return player.points.add(1).pow(0.3)
+        return player.points.add(1).pow(0.2)
     },
     effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         }
@@ -61,7 +68,10 @@ addLayer("p", {
     description: "Points boost themselves",
     cost: new Decimal(250),
     effect() {
-        return player.points.add(1).pow(0.13)
+        let eff = player.points.add(1)
+        return eff.pow(0.2)
+
+        
     },
     effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
@@ -70,7 +80,7 @@ addLayer("p", {
     description: "Prestige points boost themselves",
     cost: new Decimal(1000),
     effect() {
-        return player[this.layer].points.add(1).pow(0.15)
+        return player[this.layer].points.add(1).pow(0.1)
     },
     effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
@@ -99,7 +109,7 @@ addLayer("p", {
 })
 addLayer("F", {
     startData() { return {                  // startData is a function that returns default data for a layer. 
-        unlocked: true,                     // You can add more variables here to add them to your layer.
+        unlocked: false,         // You can add more variables here to add them to your layer.
         points: new Decimal(0),             // "points" is the internal name for the main resource of the layer.
     }},
 
@@ -123,36 +133,151 @@ addLayer("F", {
         return new Decimal(1)
     },
 
-    layerShown() { return true },          // Returns a bool for if this layer's node should be visible in the tree.
+    layerShown() { false 
+        if(hasUpgrade('p', 24)) return true
+        if(player.F.points >= 1) return true
+        if(hasUpgrade('F', 11)) return true
+    },          // Returns a bool for if this layer's node should be visible in the tree.
     
     
     upgrades: {
         11: {
             title: "MASSIVE boost",
-            description: "Increase leaves and seeds by ^1.15",
+            description: "Increase leaves and seeds by ^1.1",
             cost: new Decimal(1),
-        }
-        
+        },
+        12: {
+            title: "Fruits /= leaves",
+            description: "Fruits boost leaves gain.",
+            cost: new Decimal(400),
+            effect() {
+        return player[this.layer].points.add(1).pow(0.15)
+    },
+    effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
+            
+        },
+        13: {
+            title: "Best number real",
+            description: "x2.71 seed gain",
+            cost: new Decimal(1000),
+        },
+        14: {
+            title: "Almost real energy",
+            description: "Unlock Potential Energy",
+            cost: new Decimal(5000),
+        },
+    
+
 
     },
-
-  buyables: {
-    11: {
+buyables: {
+    41: {
+        cost(amount) { return Decimal.pow(1000, amount) },
         title: "Composter I",
-        cost() {
-        
+        display() { return `Boost leaves by 1.5 compounding<br>Amount: ${format(getBuyableAmount(this.layer, this.id))}<br>Current Cost: ${format(this.cost())} <br> Current Effect: ${format(buyableEffect(this.layer, this.id))}` },
+        canAfford() { return player.points.gte(this.cost()) },
+        buy() {
+            player.points = player.points.sub(this.cost())
+            setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
         },
-        
-        display() {
-            return(this.cost)
-        },
-        
-
-    
-        
-    }
+        effect(amount) {
+    return Decimal.pow(1.5, amount).add(1);
   }
+        
+    },
+    
+}
+
     
 }
 )
+addLayer("PE", {
+    startData() { return {                  // startData is a function that returns default data for a layer. 
+        unlocked: true,                     // You can add more variables here to add them to your layer.
+        points: new Decimal(0),             // "points" is the internal name for the main resource of the layer.
+    }},
 
+    color: "#362adbff",                       // The color for this layer, which affects many elements.
+    resource: "Potential Energy",            // The name of this layer's main prestige resource.
+    row: 1,                                 // The row this layer is on (0 is the first row).
+
+    baseResource: "Leaves",                 // The name of the resource your prestige gain is based on.
+    baseAmount() { return player.points},  // A function to return the current amount of baseResource.
+
+    requires: new Decimal(1e15),              // The amount of the base needed to  gain 1 of the prestige currency.
+                                            // Also the amount required to unlock the layer.
+
+    type: "normal",                         // Determines the formula used for calculating prestige currency.
+    exponent: 0.1,                          // "normal" prestige gain is (currency^exponent).
+
+    gainMult() {                            // Returns your multiplier to your gain of the prestige resource.
+        return new Decimal(1)               // Factor in any bonuses multiplying gain here.
+    },
+    gainExp() {                             // Returns the exponent to your gain of the prestige resource.
+        return new Decimal(1)
+    },
+    passiveGeneration(){
+let passive = new Decimal(0)
+if (hasMilestone("PE", 1)) passive = passive.add(1) //5% Prestige Points depending on Reset
+return passive
+},
+
+    layerShown() { false 
+        if(hasUpgrade('F', 14)) return true
+        if(player.PE.points >= 1) return true
+        
+    },          // Returns a bool for if this layer's node should be visible in the tree.
+    
+    clickables: {
+    11: {
+        display() { return `Potential Energy will be used to gain entropy and some QOL milestones. It does not have any upgrades tied to it. <br> btw you cant buy this upgrade`},
+        title: "woah look info"
+    }
+    
+},
+milestones: {
+    1: {
+        requirementDescription: "Preform P.E reset once",
+        effectDescription: "Gain 100% of P.E on reset.",
+        done() { return player.PE.points.gte(1) }
+    },
+     2: {
+        requirementDescription: "Get 50,000 P.E",
+        effectDescription: "Gain 100% of seeds on reset.",
+        done() { return player.PE.points.gte(50000) }
+    },
+    
+}
+})
+addLayer("E", {
+    startData() { return {                  // startData is a function that returns default data for a layer. 
+        unlocked: true,                     // You can add more variables here to add them to your layer.
+        points: new Decimal(0),             // "points" is the internal name for the main resource of the layer.
+    }},
+
+    color: "#e7e7e7ff",                       // The color for this layer, which affects many elements.
+    resource: "Entropy",            // The name of this layer's main prestige resource.
+    row: 4,                                 // The row this layer is on (0 is the first row).
+
+    baseResource: "Potential Energy",                 // The name of the resource your prestige gain is based on.
+    baseAmount() { return player.PE.points },  // A function to return the current amount of baseResource.
+
+    requires: new Decimal(1e20),              // The amount of the base needed to  gain 1 of the prestige currency.
+                                            // Also the amount required to unlock the layer.
+
+    type: "normal",                         // Determines the formula used for calculating prestige currency.
+    exponent: 0.5,                          // "normal" prestige gain is (currency^exponent).
+
+    gainMult() {                            // Returns your multiplier to your gain of the prestige resource.
+        return new Decimal(1)               // Factor in any bonuses multiplying gain here.
+    },
+    gainExp() {                             // Returns the exponent to your gain of the prestige resource.
+        return new Decimal(1)
+    },
+
+    layerShown() { return false },          // Returns a bool for if this layer's node should be visible in the tree.
+
+    upgrades: {
+        // Look in the upgrades docs to see what goes here!
+    },
+})
