@@ -17,7 +17,7 @@ addLayer("p", {
         let mult = new Decimal(1)
         if (hasUpgrade('p', 13)) mult = mult.times(upgradeEffect('p', 13))
         if (hasUpgrade('p', 14)) mult = mult.times(upgradeEffect('p', 14))
-        if (hasUpgrade('p', 21)) mult = mult.times(5)
+        if (hasUpgrade('p', 16)) mult = mult.times(5)
         if (hasUpgrade('p', 24)) mult = mult.pow(1.1)
         if (hasUpgrade('F', 11)) mult = mult.pow(1.2)
         if (hasUpgrade('F', 13)) mult = mult.times(2.71)
@@ -36,6 +36,7 @@ let passive = new Decimal(0)
 if (hasMilestone("PE", 2)) passive = passive.add(1) //5% Prestige Points depending on Reset
 return passive
 },
+
     
         upgrades: {
                     11: {
@@ -84,7 +85,7 @@ return passive
     },
     effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         },
-        21: {
+        16: {
     title: "High yielding.. seeds",
     description: "Multiply seed  gain by 5",
     cost: new Decimal(5000),
@@ -104,6 +105,21 @@ return passive
     description: "Increase seeds by ^1.1",
     cost: new Decimal(500000000),
         },
+    25: {
+        title: "Potential boost",
+        description: "Boost potential energy by x10",
+        cost: new Decimal(1e20),
+    },
+    26: {
+        title: "Really needed that extra factor",
+        description: "Boost potential energy based on seeds",
+        cost: new Decimal(1e30),
+         effect() {
+        return player.PE.points.add(1).pow(0.15)
+    },
+    effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+
+    }
     },
     
 })
@@ -141,6 +157,7 @@ addLayer("F", {
     
     
     upgrades: {
+        
         11: {
             title: "MASSIVE boost",
             description: "Increase leaves and seeds by ^1.1",
@@ -166,10 +183,22 @@ addLayer("F", {
             description: "Unlock Potential Energy",
             cost: new Decimal(5000),
         },
+        15: {
+            title: "Higher position",
+            description: "Boost potential energy by x10 again",
+            cost: new Decimal(1e8),
+        }
     
 
 
     },
+    automate() {
+  if (hasMilestone("PE", 3)) {
+    let amount = player.p.upgrades.length + 11
+    buyUpgrade("p", amount)
+    
+  }
+},
 buyables: {
     41: {
         cost(amount) { return Decimal.pow(1000, amount) },
@@ -211,7 +240,11 @@ addLayer("PE", {
     exponent: 0.1,                          // "normal" prestige gain is (currency^exponent).
 
     gainMult() {                            // Returns your multiplier to your gain of the prestige resource.
-        return new Decimal(1)               // Factor in any bonuses multiplying gain here.
+        let mult = new Decimal(1)
+        if (hasUpgrade('p', 25)) mult = mult.times(10)
+        if (hasUpgrade('F', 15)) mult = mult.times(10)
+        if (hasUpgrade('p', 26)) mult = mult.times(upgradeEffect('p', 26))
+        return mult
     },
     gainExp() {                             // Returns the exponent to your gain of the prestige resource.
         return new Decimal(1)
@@ -245,6 +278,11 @@ milestones: {
         requirementDescription: "Get 50,000 P.E",
         effectDescription: "Gain 100% of seeds on reset.",
         done() { return player.PE.points.gte(50000) }
+    },
+     3: {
+        requirementDescription: "Get 1,000,000 P.E",
+        effectDescription: "Automate seed upgrades.",
+        done() { return player.PE.points.gte(1e6)}
     },
     
 }

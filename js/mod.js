@@ -12,13 +12,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "μ0.13",
+	num: "μ0.12",
 	name: "the 1st beta update",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>μ0.13</h3><br>
-		More fruit upgrades, composter, potential energy, and uh i added entropy but its hidden until you get 1e20 P.E sorry(placeholder).`
+	<h3>v0.0</h3><br>
+		More seed upgrades and new reset layer (placeholder).`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -48,9 +48,10 @@ function getPointGen() {
 	if (hasUpgrade('p', 15)) gain = gain.times(upgradeEffect('p', 15))
 	if (hasUpgrade('p', 22)) gain = gain.times(10)
 	if (hasUpgrade('p', 23)) gain = gain.pow(1.1)
-	if (hasUpgrade('F', 11)) gain = gain.pow(1.1)
+	if (hasUpgrade('F', 11)) gain = gain.pow(1.2)
+	if (hasUpgrade('F', 21)) gain = gain.pow(upgradeEffect('F', 21)) // placeholder ignore this pls
 	if (hasUpgrade('F', 12)) gain = gain.times(upgradeEffect('F', 12))
-	gain = gain.times(buyableEffect('F', 41))
+	if (hasUpgrade('F', 41)) gain = gain.times(buyableEffect('F', 41))
     return gain
 }
 
