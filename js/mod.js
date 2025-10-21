@@ -12,13 +12,13 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "μ0.12",
+	num: "μ0.13",
 	name: "the 1st beta update",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
 	<h3>v0.0</h3><br>
-		More seed upgrades and new reset layer (placeholder).`
+		Added P.E + some milestones + new upgrades also changed balancing and layers work.`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -46,12 +46,14 @@ function getPointGen() {
 	if (hasUpgrade('p', 12)) gain = gain.times(upgradeEffect('p', 12))
 	if (hasUpgrade('p', 14)) gain = gain.times(upgradeEffect('p', 14))
 	if (hasUpgrade('p', 15)) gain = gain.times(upgradeEffect('p', 15))
-	if (hasUpgrade('p', 22)) gain = gain.times(10)
-	if (hasUpgrade('p', 23)) gain = gain.pow(1.1)
+	if (hasUpgrade('p', 17)) gain = gain.times(10)
+	if (hasUpgrade('p', 18)) gain = gain.pow(1.1)
 	if (hasUpgrade('F', 11)) gain = gain.pow(1.2)
 	if (hasUpgrade('F', 21)) gain = gain.pow(upgradeEffect('F', 21)) // placeholder ignore this pls
 	if (hasUpgrade('F', 12)) gain = gain.times(upgradeEffect('F', 12))
 	if (hasUpgrade('F', 41)) gain = gain.times(buyableEffect('F', 41))
+	if (hasUpgrade('p', 27)) gain = gain.times(upgradeEffect('p', 27))	
+	
     return gain
 }
 

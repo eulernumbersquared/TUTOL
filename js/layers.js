@@ -12,7 +12,7 @@ addLayer("p", {
     baseResource: "Leaves", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-    exponent: 0.8, // Prestige currency exponent
+    exponent: 0.7, // Prestige currency exponent
         gainMult() {
         let mult = new Decimal(1)
         if (hasUpgrade('p', 13)) mult = mult.times(upgradeEffect('p', 13))
@@ -90,12 +90,12 @@ return passive
     description: "Multiply seed  gain by 5",
     cost: new Decimal(5000),
         },
-        22: {
+        17: {
     title: "More branches",
     description: "Multiply leaf gain by 10",
     cost: new Decimal(10000),
         },
-    23: {
+    18: {
     title: "Powers i see?",
     description: "Increase leaves by ^1.1",
     cost: new Decimal(1000000),
@@ -113,14 +113,26 @@ return passive
     26: {
         title: "Really needed that extra factor",
         description: "Boost potential energy based on seeds",
-        cost: new Decimal(1e30),
+        cost: new Decimal(1e22),
          effect() {
         return player.PE.points.add(1).pow(0.15)
     },
     effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
 
-    }
     },
+    27: {
+        title: "Potential boost",
+        description: "Potential energy boosts leaves",
+        cost: new Decimal(1e26),
+         effect() {
+        return player.PE.points.add(1).pow(0.15)
+    },
+    effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+
+    },
+       
+    },
+    
     
 })
 addLayer("F", {
@@ -186,17 +198,40 @@ addLayer("F", {
         15: {
             title: "Higher position",
             description: "Boost potential energy by x10 again",
-            cost: new Decimal(1e8),
+            cost: new Decimal(1e6),
+        },
+         16: {
+            title: "Also that other factor",
+            description: "Potential energy is boosted based on fruits",
+            cost: new Decimal(1e10),
+            effect() {
+        return player.PE.points.add(1).pow(0.15)
+    },
+    effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" }, // Add formatting to the effect
         }
+        
     
 
 
     },
     automate() {
   if (hasMilestone("PE", 3)) {
-    let amount = player.p.upgrades.length + 11
-    buyUpgrade("p", amount)
+    buyUpgrade("p", 11)
+buyUpgrade("p", 12)
+buyUpgrade("p", 13)
+buyUpgrade("p", 14)
+buyUpgrade("p", 15)
+buyUpgrade("p", 16)
+buyUpgrade("p", 17)
+buyUpgrade("p", 18)
+buyUpgrade("p", 24)
+buyUpgrade("p", 25)
+buyUpgrade("p", 26)
+buyUpgrade("p", 27)
+
+
     
+
   }
 },
 buyables: {
@@ -244,6 +279,7 @@ addLayer("PE", {
         if (hasUpgrade('p', 25)) mult = mult.times(10)
         if (hasUpgrade('F', 15)) mult = mult.times(10)
         if (hasUpgrade('p', 26)) mult = mult.times(upgradeEffect('p', 26))
+        if (hasUpgrade('F', 16)) mult = mult.times(upgradeEffect('F', 16))
         return mult
     },
     gainExp() {                             // Returns the exponent to your gain of the prestige resource.
@@ -284,7 +320,11 @@ milestones: {
         effectDescription: "Automate seed upgrades.",
         done() { return player.PE.points.gte(1e6)}
     },
-    
+     4: {
+        requirementDescription: "Get 1e20 P.E",
+        effectDescription: "Unlock Entropy",
+        done() { return player.PE.points.gte(1e20) }
+     }
 }
 })
 addLayer("E", {
@@ -313,9 +353,15 @@ addLayer("E", {
         return new Decimal(1)
     },
 
-    layerShown() { return false },          // Returns a bool for if this layer's node should be visible in the tree.
+    layerShown() {  false
+        if(hasMilestone('PE', 4)) return true
+        if(player.E.points >= 1) return true },          // Returns a bool for if this layer's node should be visible in the tree.
 
     upgrades: {
         // Look in the upgrades docs to see what goes here!
     },
+    
+    
+ 
+ 
 })
