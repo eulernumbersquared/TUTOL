@@ -12,13 +12,16 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "μ0.13",
+	num: "μ0.14",
 	name: "the 1st beta update",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
+	<h3>μ0.14</h3><br>
+		More P.E upgrades, entropy upgrades. The ultimate balancing of doom has happened, reduced some effects of some seed upgrades and decreased the exponent of fruits from 0.5 --> 0.17, just because of this, fruit upgrades are cheapter. Added cells and 1 new leaf upgrade unlocked by entropy
+		<h4>μ0.13</h4><br>
 		Added P.E + some milestones + new upgrades also changed balancing and layers work.`
+	
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -52,7 +55,12 @@ function getPointGen() {
 	if (hasUpgrade('F', 21)) gain = gain.pow(upgradeEffect('F', 21)) // placeholder ignore this pls
 	if (hasUpgrade('F', 12)) gain = gain.times(upgradeEffect('F', 12))
 	if (hasUpgrade('F', 41)) gain = gain.times(buyableEffect('F', 41))
-	if (hasUpgrade('p', 27)) gain = gain.times(upgradeEffect('p', 27))	
+	if (hasUpgrade('p', 27)) gain = gain.times(upgradeEffect('p', 27))
+	gain = gain.times(buyableEffect('F', 41))
+    if (hasUpgrade('C', 11)) gain = gain.times(upgradeEffect('C', 11))
+	if (hasUpgrade('F', 17)) gain = gain.times(5)
+	if (hasUpgrade('p', 28)) gain = gain.times(1e4)
+	
 	
     return gain
 }
