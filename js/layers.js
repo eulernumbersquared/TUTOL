@@ -23,9 +23,15 @@ addLayer("p", {
         if (hasUpgrade('F', 11)) mult = mult.pow(1.2)
         if (hasUpgrade('F', 14)) mult = mult.pow(1.1)
         if (hasUpgrade('F', 17)) mult = mult.times(5)
+        if (hasUpgrade('L', 12)) multi = mult.times(308)
+        if (hasUpgrade('E', 14)) multi = mult.times(10000)
+        if (hasUpgrade('L', 12)) multi = mult.times(300)
+        
         
         return mult
     },
+    softcap: new Decimal(1e50),
+    softcapPower: 0.25,
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
@@ -44,6 +50,7 @@ let passive = new Decimal(0)
 if (hasMilestone("PEa", 2)) passive = passive.add(1) //5% Prestige Points depending on Reset
 return passive
 },
+
 
     
         upgrades: {
@@ -145,7 +152,16 @@ return passive
         description: "x1e4 leaves, just for the balance :D",
         cost: new Decimal(1e40),
     },
-       
+    29: {
+        title: "Direct chaos",
+        description: "x2 entropy DIRECTLY",
+        cost: new Decimal(5e64),
+    },
+    31: {
+        title: "Leaf riding on seeds",
+        description: "^1.3 leaves, really big boost",
+        cost: new Decimal(1e70),
+    },
     },
     
     
@@ -174,6 +190,7 @@ addLayer("F", {
         if (hasUpgrade('F', 13)) gain = gain.times(2.71)
         if (hasUpgrade('F', 17)) gain = gain.times(5)   // Factor in any bonuses multiplying gain here.
         if (hasUpgrade('L', 11)) gain = gain.times(10)
+        if (hasUpgrade('L', 12)) gain = gain.times(1e4)
         return gain
     },
     gainExp() {                             // Returns the exponent to your gain of the prestige resource.
@@ -248,8 +265,8 @@ autobuyUpgrades() {
         },
         18: {
             title: "Discover the chaos",
-            description: "x300 P.E",
-            cost: new Decimal(1e15)
+            description: "x1e10 P.E",
+            cost: new Decimal(1e9)
         },
         
     
@@ -304,9 +321,12 @@ addLayer("PE", {
         if (hasUpgrade('p', 26)) mult = mult.times(upgradeEffect('p', 26))
         if (hasUpgrade('F', 16)) mult = mult.times(upgradeEffect('F', 16))
         if (upgradeEffect('F', 16) > 1e6) mult = mult.log10(upgradeEffect('F', 16))
-        if (hasUpgrade('F', 18)) mult = mult.times(300)
+        if (hasUpgrade('F', 18)) mult = mult.times(1e10)
+        if (hasUpgrade('E', 16)) mult = mult.times(300)
+        if (hasUpgrade('L', 12)) mult = mult.pow(1.1)
         return mult
     },
+    
     gainExp() {                             // Returns the exponent to your gain of the prestige resource.
         return new Decimal(1)
     },
@@ -385,6 +405,12 @@ addLayer("E", {
     gainExp() {                             // Returns the exponent to your gain of the prestige resource.
         return new Decimal(1)
     },
+    directMult(){
+     let mult = new Decimal(1)
+      if (hasUpgrade('p', 29)) mult = mult.times(2)
+    return mult
+
+    },
 
     layerShown() {  false
         if(hasMilestone('PEa', 4)) return true
@@ -407,12 +433,77 @@ addLayer("E", {
             title: "Eons and Eons",
             description: "Unlock leaf upgrades (MUST HAVE THE 1ST UPGRADE OTHERWISE NO EFFECT)",
             cost: new Decimal(1),
-        }
+        },
+         13:{
+            title: "Fixing the balancing",
+            description: "Multiply leaves by 1e10, do 3 resets for this",
+            cost: new Decimal(2),
+        },
+        14:{
+            title: "Rise",
+            description: "Leaves are boosted by ^1.1. Seeds are boosted by x10000. Fruits are boosted by x300",
+            cost: new Decimal(6),
+        },
+        15:{
+            title: "Beyond cells",
+            description: "Unlock bacteria, increase cells by ^1.2",
+            cost: new Decimal(10),
+        },
     },
-    
-    
- 
- 
+})
+addLayer("Ba", {
+    startData() { return {                  // startData is a function that returns default data for a layer. 
+        unlocked: false,                     // You can add more variables here to add them to your layer.
+        points: new Decimal(0),             // "points" is the internal name for the main resource of the layer.
+    }},
+
+    color: "#48ff00bb",                       // The color for this layer, which affects many elements.
+    resource: "Bacteria",            // The name of this layer's main prestige resource.
+    row: 4,                                 // The row this layer is on (0 is the first row).
+
+    baseResource: "Cells",                 // The name of the resource your prestige gain is based on.
+    baseAmount() { return player.C.points },  // A function to return the current amount of baseResource.
+
+    requires: new Decimal(1e308),              // The amount of the base needed to  gain 1 of the prestige currency.
+                                            // Also the amount required to unlock the layer.
+
+    type: "static",
+    exponent: 3,                      // Determines the formula used for calculating prestige currency.
+    base: 1e308,                          // "normal" prestige gain is (currency^exponent).
+
+    gainMult() {                            // Returns your multiplier to your gain of the prestige resource.
+        return new Decimal(1)               // Factor in any bonuses multiplying gain here.
+    },
+    gainExp() {                             // Returns the exponent to your gain of the prestige resource.
+        return new Decimal(1)
+    },
+
+    layerShown() { false
+        if(hasUpgrade('E', 15)) return true
+     },          // Returns a bool for if this layer's node should be visible in the tree.
+infoboxes: {
+    lore: {
+        title: "Info",
+        body() { return "Congrats on unlocking bacteria! This will be your main way on getting more cells, each bacteria will cost 1e308 more than the one before, but the boost is worth it! As it boosts cells by ^1.2 per bacteria" },
+        
+    },
+},
+upgrades:{
+        11:{
+            title: "Boost",
+            description: `Boosting cells by: (test jumpscare raah)`,
+            cost: new Decimal(0),
+            effect() {
+        return player.Ba.points.add(1e30).pow(player.Ba.points)
+    },
+    effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+    cost: new Decimal(0),
+
+        },
+        
+    },
+
+
 })
 addLayer("C", {
     startData() { return {                  // startData is a function that returns default data for a layer. 
@@ -436,11 +527,15 @@ addLayer("C", {
     gainMult() {                            // Returns your multiplier to your gain of the prestige resource.
         let gain = new Decimal(1);
         gain = gain.times(buyableEffect('C', 11))
-        if(player.C.points > 1.79e308) gain = gain.times(0)
+        if (hasUpgrade('E', 15)) gain = gain.pow(1.2)
+        if (hasUpgrade('Ba', 11)) gain = gain.pow(upgradeEffect('Ba', 11))
         
         
         return gain           // Factor in any bonuses multiplying gain here.
     },
+    softcap: new Decimal(1.79e308),
+    softcapPower: 0.3,
+    
     gainExp() {                             // Returns the exponent to your gain of the prestige resource.
         return new Decimal(1)
     },
@@ -459,7 +554,7 @@ if (hasUpgrade('E', 11)) passive = passive.add(1)
     buyables: {
     11: {
         cost(amount) { return Decimal.pow(2, amount) },
-        title: "Increase cell gain by x2",
+        title: "Increase cell gain by x10",
         display() { return `<br>Amount: ${format(getBuyableAmount(this.layer, this.id))}<br>Current Cost: ${format(this.cost())} <br> Current Effect: ${format(buyableEffect(this.layer, this.id))}` },
         canAfford() { return player.E.points.gte(this.cost()) },
         buy() {
@@ -467,7 +562,7 @@ if (hasUpgrade('E', 11)) passive = passive.add(1)
             setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
         },
         effect(amount) {
-    return Decimal.pow(2, amount).add(1);
+    return Decimal.pow(10, amount).add(1);
   }
 },
     
@@ -476,7 +571,7 @@ if (hasUpgrade('E', 11)) passive = passive.add(1)
     },
     clickables: {
         11: {
-            title: "Cells are hardcapped at 1.79e308",
+            title: "Cells are softcapped at 1.79e308",
             
         },
         12: {
@@ -586,7 +681,7 @@ addLayer("L", {
 
     color: "#48ff00ff",                       // The color for this layer, which affects many elements.
     resource: "stats that really dont matter but exist for technical reasons",            // The name of this layer's main prestige resource
-    row: 0,                                 // The row this layer is on (0 is the first row).
+    row: 5,                                 // The row this layer is on (0 is the first row).
 
     baseResource: "Leaves",                 // The name of the resource your prestige gain is based on.
     baseAmount() { return player.points },  // A function to return the current amount of baseResource.
@@ -611,11 +706,27 @@ addLayer("L", {
 
     upgrades: {
         11:{
-            title: "Suprising",
+            title: "Suprising upgrade",
             description: "Dont think these upgrades are cheap! They are very expensive with GREAT value! How about we start with x10 fruits? Since the fruit economy is really bad...",
             currencyDisplayName: "Leaves",
             currencyInternalName: "points",
-            cost: new Decimal(1e100),
+            cost: new Decimal(1e55),
+            
+    },
+    12:{
+            title: "Infinite cycle",
+            description: "x308 seeds gain, x1e15 leaves, x1e4 fruits, and ^1.1 P.E this better help you out",
+            currencyDisplayName: "Leaves",
+            currencyInternalName: "points",
+            cost: new Decimal(1e115),
+            
+    },
+    13:{
+            title: "The limits",
+            description: "^1.05 fruits",
+            currencyDisplayName: "Leaves",
+            currencyInternalName: "points",
+            cost: new Decimal(1.79e308),
             
     }
     }

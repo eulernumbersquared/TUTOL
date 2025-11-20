@@ -12,11 +12,15 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "μ0.14",
-	name: "the 1st beta update",
+	num: "μ∞",
+	name: "final update for this",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
+    <h3>μ∞</h3><br>
+		left you guys with bacteria and a upgrade, that's it. Its time for a game OUTSIDE of TMT
+		<h4>μ0.13</h4><br>
+		Added P.E + some milestones + new upgrades also changed balancing and layers work.
 	<h3>μ0.14</h3><br>
 		More P.E upgrades, entropy upgrades. The ultimate balancing of doom has happened, reduced some effects of some seed upgrades and decreased the exponent of fruits from 0.5 --> 0.17, just because of this, fruit upgrades are cheapter. Added cells and 1 new leaf upgrade unlocked by entropy
 		<h4>μ0.13</h4><br>
@@ -60,6 +64,11 @@ function getPointGen() {
     if (hasUpgrade('C', 11)) gain = gain.times(upgradeEffect('C', 11))
 	if (hasUpgrade('F', 17)) gain = gain.times(5)
 	if (hasUpgrade('p', 28)) gain = gain.times(1e4)
+	if (hasUpgrade('E', 13)) gain = gain.times(1e10)
+	if (hasUpgrade('E', 14)) gain = gain.pow(1.1)
+	if (hasUpgrade('p', 31)) gain = gain.pow(1.1)
+	if (hasUpgrade('L', 12)) gain = gain.times(1e15)
+	
 	
 	
     return gain
