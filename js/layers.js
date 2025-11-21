@@ -26,6 +26,8 @@ addLayer("p", {
         if (hasUpgrade('L', 12)) multi = mult.times(308)
         if (hasUpgrade('E', 14)) multi = mult.times(10000)
         if (hasUpgrade('L', 12)) multi = mult.times(300)
+        if (hasUpgrade('T', 11)) mult = mult.pow(2)
+        if (hasUpgrade('T', 16)) mult = mult.pow(-1e30)
         
         
         return mult
@@ -191,6 +193,8 @@ addLayer("F", {
         if (hasUpgrade('F', 17)) gain = gain.times(5)   // Factor in any bonuses multiplying gain here.
         if (hasUpgrade('L', 11)) gain = gain.times(10)
         if (hasUpgrade('L', 12)) gain = gain.times(1e4)
+        if (hasUpgrade('T', 11)) gain = gain.pow(2)
+        if (hasUpgrade('T', 14)) gain = gain.pow(-1e30)
         return gain
     },
     gainExp() {                             // Returns the exponent to your gain of the prestige resource.
@@ -408,6 +412,7 @@ addLayer("E", {
     directMult(){
      let mult = new Decimal(1)
       if (hasUpgrade('p', 29)) mult = mult.times(2)
+      if (hasUpgrade('T', 13)) mult = mult.pow(-1e30)
     return mult
 
     },
@@ -501,6 +506,7 @@ upgrades:{
 
         },
         
+        
     },
 
 
@@ -529,6 +535,9 @@ addLayer("C", {
         gain = gain.times(buyableEffect('C', 11))
         if (hasUpgrade('E', 15)) gain = gain.pow(1.2)
         if (hasUpgrade('Ba', 11)) gain = gain.pow(upgradeEffect('Ba', 11))
+        if (hasUpgrade('C', 12)) gain = gain.times(upgradeEffect('C', 12))
+        if (hasUpgrade('C', 13)) gain = gain.times(upgradeEffect('C', 13))
+        if (hasUpgrade('T', 15)) gain = gain.pow(-1e30)
         
         
         return gain           // Factor in any bonuses multiplying gain here.
@@ -588,7 +597,28 @@ if (hasUpgrade('E', 11)) passive = passive.add(1)
         
     },
     effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+        },
+        12:{
+            title: "Self-cell boost",
+            description: "Boost cells cuz this game is so over",
+            cost: new Decimal(1),
+             effect() {
+        return player.C.points.log10(player.C.points + 1e15).pow(5)
+        
+    },
+    effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
+        },
+        13:{
+            title: "It's probably time",
+            description: "uh oh big boost dfjashbrlafeafed",
+            cost: new Decimal(1),
+             effect() {
+        return player.C.points.add(1).pow(0.3)
+        
+    },
+    effectDisplay() { return format(upgradeEffect(this.layer, this.id))+"x" },
         }
+
     },
     
     
@@ -730,4 +760,82 @@ addLayer("L", {
             
     }
     }
+})
+addLayer("T", {
+    startData() { return {                  // startData is a function that returns default data for a layer. 
+        unlocked: true,                     // You can add more variables here to add them to your layer.
+        points: new Decimal(0),             // "points" is the internal name for the main resource of the layer.
+    }},
+
+    color: "#5f5d5dff",                       // The color for this layer, which affects many elements.
+    resource: "The True Finale",            // The name of this layer's main prestige resource.
+    row: 7,                                 // The row this layer is on (0 is the first row).
+
+    baseResource: "Leaves",                 // The name of the resource your prestige gain is based on.
+    baseAmount() { return player.points },  // A function to return the current amount of baseResource.
+
+    requires: new Decimal(1e300),              // The amount of the base needed to  gain 1 of the prestige currency.
+                                            // Also the amount required to unlock the layer.
+
+    type: "normal",                         // Determines the formula used for calculating prestige currency.
+    exponent: 1e-322,                          // "normal" prestige gain is (currency^exponent).
+
+    gainMult() {                            // Returns your multiplier to your gain of the prestige resource.
+        return new Decimal(1)               // Factor in any bonuses multiplying gain here.
+    },
+    gainExp() {                             // Returns the exponent to your gain of the prestige resource.
+        return new Decimal(1)
+    },
+
+    layerShown() { return true },          // Returns a bool for if this layer's node should be visible in the tree.
+
+    upgrades: {
+        11:{
+            title: "Let it all start",
+            description: "Boost LSF by ^2",
+            cost: new Decimal(1),
+
+        },
+        12:{
+            title: "It shall all fall soon",
+            description: "Leaves are boosted by ^30",
+            cost: new Decimal(1),
+
+        },
+        13:{
+            title: "You started this",
+            description: "Entropy has been NaNed out of existence",
+            
+            cost: new Decimal(1e308),
+
+        },
+        14:{
+            title: "These upgrades are useless to you",
+            description: "Fruits have been NaNed from this tree",
+            
+            cost: new Decimal(1e308),
+
+        },
+        15:{
+            title: "But you, wouldn't care, right? The tree has started to decay",
+            description: "Cells have have been NaNed from this tree",
+            
+            cost: new Decimal(1e308),
+
+        },
+        16:{
+            title: "Whatever i say wont matter however",
+            description: "Seeds have have been NaNed from this tree",
+            
+            cost: new Decimal(1e308),
+
+        },
+        17:{
+            title: "Because the main source of your tree is gone. Goodbye, the void is infinite with no end",
+            description: "Leaves have have been NaNed from this tree, thanks for playing, see you in the reality",
+            
+            cost: new Decimal(1e308),
+
+        },
+    },
 })

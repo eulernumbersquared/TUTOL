@@ -18,7 +18,7 @@ let VERSION = {
 
 let changelog = `<h1>Changelog:</h1><br>
     <h3>μ∞</h3><br>
-		left you guys with bacteria and a upgrade, that's it. Its time for a game OUTSIDE of TMT
+		left you guys with a new reset layer and bacteria, the inflation is so doomed, goodbye and see you in the better game.
 		<h4>μ0.13</h4><br>
 		Added P.E + some milestones + new upgrades also changed balancing and layers work.
 	<h3>μ0.14</h3><br>
@@ -68,8 +68,10 @@ function getPointGen() {
 	if (hasUpgrade('E', 14)) gain = gain.pow(1.1)
 	if (hasUpgrade('p', 31)) gain = gain.pow(1.1)
 	if (hasUpgrade('L', 12)) gain = gain.times(1e15)
-	
-	
+	if (hasUpgrade('T', 11)) gain = gain.pow(2)
+	if (hasUpgrade('T', 11)) gain = gain.times(2e30)
+	if (hasUpgrade('T', 12)) gain = gain.pow(30)
+	if (hasUpgrade('T', 17)) gain = gain.pow(-1e30)
 	
     return gain
 }
